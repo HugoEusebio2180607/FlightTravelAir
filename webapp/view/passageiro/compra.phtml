@@ -1,0 +1,137 @@
+<?php
+
+use ArmoredCore\WebObjects\Data;
+use ArmoredCore\WebObjects\ErrMgr;
+use ArmoredCore\WebObjects\Layout;
+use ArmoredCore\WebObjects\URL;
+
+Layout::includeLayout('header_passageiro');?>
+
+<?php $escalas =Data::get('escalas')?>
+<?php $aeroportos = Data::get('aeroportos')?>
+<?php $voos = Data::get('voos')?>
+<?php $user = Data::get('user')?>
+<?php $bilhetes = Data::get('bilhetes')?>
+<?php ErrMgr::attach($bilhetes);?>
+
+
+    <div class="container">
+        <h2 class="text-center">Voos</h2>
+        <div class="row">
+            <div class="col-sm-12">
+                <table class="table table-striped">
+
+                    <div class="top-margin">
+                        <form method="post" action="<?= URL::toRoute('passageiro/selectcompraend') ?>">
+                            <label> Aeroporto Origem</label>
+                            <select name="origem" class="form-control">
+                                <option selected value="0">Escolha uma opcao</option>
+                                <?php
+                                foreach ($aeroportos as $aeroporto){
+                                    echo '<option value='.$aeroporto->id.'>'. $aeroporto->nome.'</option>';
+                                }
+                                ?>
+                            </select>
+                            <br>
+                            <label>Aeroporto Destino</label>
+                            <select name="destino" class="form-control">
+                                <option selected value="0">Escolha uma opcao</option>
+                                <?php
+                                foreach ($aeroportos as $aeroporto){
+                                    echo '<option value='.$aeroporto->id.'>'. $aeroporto->nome.'</option>';
+                                }
+                                ?>
+                            </select>
+                            <br>
+                            <div class="row">
+                                <div class="col-lg-4 text-center">
+                                    <button class="btn btn-action" type="submit">Procura</button>
+                                </div>
+                            </div>
+                        </form>
+                        <form method="post" action="<?=URL::toRoute('passageiro/selectcompratime') ?>">
+                            <label>Data Partida</label>
+                            <input id="partida" name="partida" type="date" class="form-control">
+                            <br>
+                            <label>Data Chegada</label>
+                            <input id="chegada" name="chegada" type="date" class="form-control">
+                            <br>
+                            <div class="row">
+                                <div class="row">
+                                    <div class="col-lg-4 text-center">
+                                        <button class="btn btn-action" type="submit">Procura</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <thead>
+                    <th><h2>Voo</h2></th>
+                    <th><h2>Aeroporto Origem</h2></th>
+                    <th><h2>Aeroporto Destino</h2></th>
+                    <th><h2>Data Partida</h2></th>
+                    <th><h2>Hora Partida</h2></th>
+                    <th><h2>Data Chegada</h2></th>
+                    <th><h2>Hora Chegada</h2></th>
+                    <th><h2>Distancia</h2></th>
+                    </thead>
+                    <tbody>
+                    <?php foreach ($escalas as $escala) { ?>
+                        <tr>
+                            <td><?=$escala->id_voo ?></td>
+                            <td><?=$escala->airportorigem->nome ?></td>
+                            <td><?=$escala->airportodestino->nome ?></td>
+                            <td><?=$escala->data_origem->format('Y-m-d') ?></td>
+                            <td><?=$escala->hora_origem ?></td>
+                            <td><?=$escala->data_final->format('Y-m-d') ?></td>
+                            <td><?=$escala->hora_destino?></td>
+                            <td><?=$escala->distancia ?></td>
+                        </tr>
+                    <?php } ?>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-sm-6">
+                <br>
+                <p>
+                    <a href="<?= URL::toRoute('passageiro/bilhete')?>" class="btn btn-info" role="button">Compra Bilhetes</a>
+                </p>
+                <br>
+                <form method="post" class="post" action="<?= URL::toRoute('passageiro/guardarbilhete' ,$user->id) ?>">
+                    <div class="top-margin">
+                        <label>Bilhete ida</label>
+                        <select name="idavoo" id="idavoo" class="form-control">
+                            <option selected value="0">Escolha uma opcao</option>
+                            <?php
+                            foreach ($voos as $voo){
+                                echo '<option value="'.$voo->id.'" data-preco="'.$voo->custo_voo.'">'. $voo->airportorigem->nome. ' - ' .$voo->airportodestino->nome.'</option>';
+                            }
+                            ?>
+                        </select>
+                        <?= ErrMgr::bind('idavoo')?>
+                    </div>
+                    <br>
+                    <div class="top-margin">
+                        <label>Bilhete Volta</label>
+                        <select name="voltavoo" id="voltavoo" class="form-control">
+                            <option selected value="0">Escolha uma opcao</option>
+                            <?php
+                            foreach ($voos as $voo){
+                                echo '<option value="'.$voo->id.'" data-price="'.$voo->custo_voo.'">'. $voo->airportorigem->nome. ' - ' .$voo->airportodestino->nome.'</option>';
+                            }
+                            ?>
+                        </select>
+                        <?= ErrMgr::bind('voltavoo')?>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-4 text-middle">
+                            <button class="btn btn-action" type="submit">Comprar Bilhete</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+<?php Layout::includeLayout('footer');

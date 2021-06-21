@@ -1,0 +1,59 @@
+<?php
+
+use ArmoredCore\WebObjects\Asset;
+use ArmoredCore\WebObjects\Data;
+use ArmoredCore\WebObjects\Layout;
+use ArmoredCore\WebObjects\URL;
+
+Layout::includeLayout('backoffice');?>
+<?php $user = Data::get('user')?>
+
+
+<div class="container">
+
+    <ol class="breadcrumb">
+        <li><a href="index.html">Home</a></li>
+        <li class="active">User</li>
+    </ol>
+
+    <h1>User Management</h1>
+    <div class="row">
+        <table class="table table-striped">
+            <thead>
+            <th>Id</th>
+            <th>Nome</th>
+            <th>Morada</th>
+            <th>Nif</th>
+            <th>Email</th>
+            <th>Telefone</th>
+            <th>Role</th>
+            </thead>
+            <tbody>
+            <?php foreach ($user as $users) { ?>
+                <tr>
+                    <td><?= $users->id ?></td>
+                    <td><?= $users->nome ?></td>
+                    <td><?= $users->morada ?></td>
+                    <td><?= $users->nif ?></td>
+                    <td><?= $users->email ?></td>
+                    <td><?= $users->telefone ?></td>
+                    <td><?= $users->roles ?></td>
+                    <td>
+                        <a href="<?= URL::toRoute('user/edit' , $users->id)?>" class="btn btn-action" role="button">Editar</a>
+                        <a href="<?= URL::toRoute('user/delete' , $users->id)?>" class="btn btn-action" role="button">Eliminar</a>
+                    </td>
+                </tr>
+           <?php } ?>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-sm-6">
+        <h2>Criar um novo user</h2>
+        <p>
+            <a href="<?= URL::toRoute('user/create') ?>" class="btn btn-info" role="button">Novo User</a>
+        </p>
+    </div>
+</div>
+
+

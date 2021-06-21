@@ -1,0 +1,56 @@
+<?php
+
+use ArmoredCore\WebObjects\Asset;
+use ArmoredCore\WebObjects\Data;
+use ArmoredCore\WebObjects\Layout;
+use ArmoredCore\WebObjects\URL;
+
+Layout::includeLayout('header_gestor');?>
+<?php $voo = Data::get('voo')?>
+
+
+<div class="container">
+
+    <ol class="breadcrumb">
+        <li><a href="index.html">Home</a></li>
+        <li class="active">Voos</li>
+    </ol>
+
+    <h1>Voos Management</h1>
+    <div class="row">
+        <table class="table table-striped">
+            <thead>
+            <th>Id</th>
+            <th>Aeroporto Origem</th>
+            <th>Aeroporto Destino</th>
+            <th>Custo do Voo</th>
+            </thead>
+            <tbody>
+            <?php foreach ($voo as $voos) { ?>
+                <tr>
+                    <td><?= $voos->id ?></td>
+                    <td><?= $voos->airportorigem->nome?></td>
+                    <td><?= $voos->airportodestino->nome?></td>
+                    <td><?= $voos->custo_voo ?></td>
+                    <td>
+
+                        <a href="<?= URL::toRoute('voos/edit' , $voos->id)?>" class="btn btn-action" role="button">Editar</a>
+                        <a href="<?= URL::toRoute('voos/destroy' , $voos->id)?>" class="btn btn-action" role="button">Eliminar</a>
+                        <a href="<?= URL::toRoute('escala/index' , $voos->id)?>" class="btn btn-action" role="button">Escalas</a>
+                    </td>
+                </tr>
+            <?php } ?>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-sm-6">
+        <h2>Criar um novo Voo</h2>
+        <p>
+            <a href="<?= URL::toRoute('voos/create') ?>" class="btn btn-info" role="button">Novo Voo</a>
+        </p>
+    </div>
+</div>
+
+
+

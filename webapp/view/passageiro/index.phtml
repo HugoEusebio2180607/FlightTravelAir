@@ -1,0 +1,45 @@
+<?php
+
+use ArmoredCore\WebObjects\Data;
+use ArmoredCore\WebObjects\Layout;
+use ArmoredCore\WebObjects\URL;
+
+Layout::includeLayout('header_passageiro');
+?>
+<?php $passageiros = Data::get('user'); ?>
+<?php $escalas = Data::get('escala'); ?>
+
+<div class="container">
+
+    <h2 class="text-center top-space">Passageiros</h2>
+    <h2 class="top-space"></h2>
+    <div class="row">
+        <div class="col-sm-12">
+            <table class="table table-striped">
+                <thead>
+                <th>Nome</th>
+                <th>Morada</th>
+                <th>Email</th>
+                <th>NIF</th>
+                <th>Telefone</th>
+                <th>Password</th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><?=$passageiros->nome?></td>
+                        <td><?=$passageiros->morada?></td>
+                        <td><?=$passageiros->email?></td>
+                        <td><?=$passageiros->nif?></td>
+                        <td><?=$passageiros->telefone?></td>
+                        <td><?=$passageiros->password?></td>
+                        <td>
+                            <a href="<?= URL::toRoute('passageiro/edit' ,$passageiros->id)?>" class="btn btn-info" role="button">Edit</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+</div>

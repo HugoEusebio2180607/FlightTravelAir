@@ -1,0 +1,52 @@
+<?php
+
+use ArmoredCore\WebObjects\Asset;
+use ArmoredCore\WebObjects\Data;
+use ArmoredCore\WebObjects\Layout;
+use ArmoredCore\WebObjects\URL;
+
+Layout::includeLayout('backoffice');?>
+<?php $aeroporto = Data::get('aeroporto')?>
+
+
+<div class="container">
+
+    <ol class="breadcrumb">
+        <li><a href="index.html">Home</a></li>
+        <li class="active">Aeroporto</li>
+    </ol>
+
+    <h1>Aeroporto Management</h1>
+    <div class="row">
+        <table class="table table-striped">
+            <thead>
+            <th>Id</th>
+            <th>Nome</th>
+            <th>Localização</th>
+            </thead>
+            <tbody>
+            <?php foreach ($aeroporto as $aeroportos) { ?>
+                <tr>
+                    <td><?= $aeroportos->id ?></td>
+                    <td><?= $aeroportos->nome ?></td>
+                    <td><?= $aeroportos->localizacao ?></td>
+                    <td>
+                        <a href="<?= URL::toRoute('aeroporto/edit' , $aeroportos->id)?>" class="btn btn-action" role="button">Editar</a>
+                        <a href="<?= URL::toRoute('aeroporto/destroy' , $aeroportos->id)?>" class="btn btn-action" role="button">Eliminar</a>
+                    </td>
+                </tr>
+            <?php } ?>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-sm-6">
+        <h2>Criar um novo Aeroporto</h2>
+        <p>
+            <a href="<?= URL::toRoute('aeroporto/create') ?>" class="btn btn-info" role="button">Novo User</a>
+        </p>
+    </div>
+</div>
+
+
+

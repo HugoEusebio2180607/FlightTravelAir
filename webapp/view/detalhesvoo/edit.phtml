@@ -1,0 +1,66 @@
+<?php
+
+use ArmoredCore\WebObjects\Data;
+use ArmoredCore\WebObjects\ErrMgr;
+use ArmoredCore\WebObjects\Layout;
+use ArmoredCore\WebObjects\URL;
+
+Layout::includeLayout('header_gestor');?>
+
+<?php $detalhes = Data::get('detalhevoo')?>
+<?php $escalas = Data::get('escalas') ?>
+<?php $avioes = Data::get('avioes') ?>
+<?php ErrMgr::attach($detalhes) ?>
+
+<div class="container">
+
+    <div class="row">
+
+        <header class="page-header">
+            Editar Detalhes
+        </header>
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+
+                <hr>
+
+                <form method="post" action="<?= URL::toroute('detalhesvoo/update' , $detalhes->id)?>" >
+
+                    <div class="form-group">
+                        <div class="col-sm-6">
+                            <select type="text"  value="<?=$escalas->id_escala ?>" class="form-control" required name="id_escala">
+                                <?php
+                                foreach ($escalas as $escala) {
+                                    echo '<option value='.$escala->id.'>'. $escala->id . '</option>';
+                                }?>
+                            </select>
+                            <?= ErrMgr::bind('id_escala')?>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-6">
+                            <select class="form-control" name="id_aviao">
+                                <?php
+                                foreach ($avioes as $aviao) {
+                                    echo '<option value='.$aviao->id.'>'. $aviao->id . '</option>';
+                                }?>
+                            </select>
+                            <?= ErrMgr::bind('aeroporto_destino')?>
+                        </div>
+                    </div>
+                    <div class="top-margin">
+                        <label>Passageiros<span class="text-danger">*</span></label>
+                        <input type="text" value="<?= $aviao->passageiros ?>" name="passageiros" class="form-control" placeholder="Insira o nº passageiros">
+                        <?= ErrMgr::bind('passageiros') ?>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4 text-center">
+                            <button class="btn btn-action" type="submit">Save</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

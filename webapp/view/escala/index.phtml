@@ -1,0 +1,65 @@
+<?php
+
+use ArmoredCore\WebObjects\Asset;
+use ArmoredCore\WebObjects\Data;
+use ArmoredCore\WebObjects\Layout;
+use ArmoredCore\WebObjects\URL;
+
+Layout::includeLayout('header_gestor');?>
+<?php $voo = Data::get('voo')?>
+<?php $aeroporto = Data::get('aeroporto')?>
+
+
+<div class="container">
+
+    <ol class="breadcrumb">
+        <li><a href="index.html">Home</a></li>
+        <li class="active">Escala</li>
+    </ol>
+
+    <?php
+        echo '<h3 class="text-center top-margin"> Voos de ' .$voo->airportorigem->nome. 'para'.$voo->airportodestino->nome.'</h3>';
+    ?>
+    <h1>Escala Management</h1>
+    <div class="row">
+        <table class="table table-striped">
+            <thead>
+            <th>Id</th>
+            <th>Origem</th>
+            <th>Destino</th>
+            <th>Hora Partida</th>
+            <th>Hora Destino</th>
+            <th>Data Origem</th>
+            <th>Data Final</th>
+            </thead>
+            <tbody>
+            <?php foreach ($voo->escala as $voos) { ?>
+                <tr>
+                    <td><?= $voos->airportorigem->nome ?></td>
+                    <td><?= $voos->data_origem->format('Y-m-d')?></td>
+                    <td><?= $voos->data_final->format('Y-m-d')?></td>
+                    <td><?= $voos->hora_origem ?></td>
+                    <td><?= $voos->hora_destino ?></td>
+                    <td><?= $voos->distancia ?></td>
+                    <td>
+                        <a href="<?= URL::toRoute('detalhesvoo/create' , $voos->id)?>" class="btn btn-action" role="button">Detalhes</a>
+                        <a href="<?= URL::toRoute('escala/edit' , $voos->id)?>" class="btn btn-action" role="button">Editar</a>
+                        <a href="<?= URL::toRoute('escala/destroy' , $voos->id)?>" class="btn btn-action" role="button">Eliminar</a>
+                    </td>
+                </tr>
+            <?php } ?>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-sm-6">
+        <h2>Criar um nova escala</h2>
+        <p>
+            <a href="<?= URL::toRoute('escala/create'  ,$voo->id)?>" class="btn btn-info" role="button">Nova Escala</a>
+        </p>
+    </div>
+</div>
+
+
+
+

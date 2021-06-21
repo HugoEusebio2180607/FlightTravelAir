@@ -1,0 +1,52 @@
+<?php
+
+
+use ArmoredCore\WebObjects\Data;
+use ArmoredCore\WebObjects\Layout;
+use ArmoredCore\WebObjects\URL;
+
+Layout::includeLayout('header_gestor');
+
+?>
+
+<?php $detalhes = Data::get('detalhesvoo');?>
+
+<?php $escalas = Data::get('escalas')?>
+<?php $avioes =Data::get('avioes')?>
+
+    <div content="container">
+
+        <h2 class="text-center"> Detalhes do Voo</h2>
+        <div class="row">
+            <div class="col-sm-12">
+                <table class="table table-striped">
+                    <thead>
+                    <th>Escala</th>
+                    <th>Aviao</th>
+                    <th>Passageiros</th>
+                    </thead>
+                    <tbody>
+                    <?php foreach ($detalhes as $detalhe) { ?>
+                    <tr>
+                        <td><?=$detalhe->id_escala ?></td>
+                        <td>
+                            <?php foreach ($avioes as $aviao) {
+                                if ($aviao->id == $detalhe->id_aviao) {
+                                    echo '<option value=' .$detalhe->id . '>' .$aviao->referencia . '</option>';
+                                }
+                            }?>
+                        </td>
+                        <td><?=$detalhe->passageiros ?></td>
+                        <td >
+                            <a href="<?=URL::toRoute('detalhesvoo/edit', $detalhe->id) ?>" class="btn btn-info" role="button">Editar</a>
+                            <a href="<?=URL::toRoute('detalhesvoo/destroy' , $detalhe->id)?>" class="btn btn-warning" role="button">Delete</a>
+                        </td>
+                    </tr>
+                    <?php   }?>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+<?php Layout::includeLayout('footer'); ?>

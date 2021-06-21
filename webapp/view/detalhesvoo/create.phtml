@@ -1,0 +1,65 @@
+<?php
+
+
+use ArmoredCore\WebObjects\Data;
+use ArmoredCore\WebObjects\ErrMgr;
+use ArmoredCore\WebObjects\Layout;
+use ArmoredCore\WebObjects\URL;
+
+Layout::includeLayout('header_gestor');?>
+
+<?php $detalhes = Data::get('detalhesvoo')?>
+<?php $escalas = Data::get('escalas') ?>
+<?php $avioes = Data::get('avioes') ?>
+<?php ErrMgr::attach($detalhes) ?>
+
+
+
+    <div class="container">
+        <div class="row">
+
+            <header class="page-header">
+                <h1 class="page-title">Novo detalhes do Voo</h1>
+            </header>
+
+            <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+
+                        <form method="post" action="<?= URL::toroute('detalhesvoo/store') ?>">
+                            <div class="top-margin">
+                                <label>Voo <span class="text-danger">*</span></label>
+                                <select name="id_escala" class="form-control">
+                                    <option value="<?= $escalas->id?>"><?=$escalas->id?></option>
+                                </select>
+                                <?= ErrMgr::bind('id_escala')?>
+                            </div>
+                            <div class="top-margin">
+                                <label>Avião <span class="text-danger">*</span></label>
+                                <select name="id_aviao" class="form-control">
+                                    <?php
+                                    foreach ($avioes as $aviao) {
+                                        echo '<option value='.$aviao->id. '>' .$aviao->referencia. '</option>';
+                                    }
+                                    ?>
+                                </select>
+                                <?= ErrMgr::bind('id_aviao')?>
+                            </div>
+                            <div class="top-margin">
+                                <label>Passageiros <span class="text-danger">*</span></label>
+                                <input type="text" value="<?= $detalhes->passageiros ?>" name="passageiros" class="form-control" placeholder="Insira o passageiros">
+                                <?= ErrMgr::bind('passageiros') ?>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-lg-4 text-center">
+                                    <button class="btn btn-action" type="submit">Criar Avião</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php Layout::includeLayout('footer');

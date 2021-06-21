@@ -1,0 +1,61 @@
+<?php
+
+use ArmoredCore\WebObjects\Data;
+use ArmoredCore\WebObjects\ErrMgr;
+use ArmoredCore\WebObjects\Layout;
+use ArmoredCore\WebObjects\URL;
+
+Layout::includeLayout('header_passageiro') ?>
+<?php $passageiro= Data::get('user')?>
+<?php ErrMgr::attach($passageiro) ?>
+
+
+<div class="container">
+    <div class="row">
+
+        <article class="col-xs-12 maincontent">
+            <br><br>
+            <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <h1 class="thin text-center">Editar Perfil</h1>
+                        <hr>
+                        <form action="<?= URL::toRoute('passageiro/update', $passageiro->id) ?>" method="post">
+                            <div class="top-margin">
+                                <label>Nome<span class="text-danger">*</span></label>
+                                <input required type="text" value="<?= $passageiro->nome ?>" class="form-control" name="nome" placeholder="Insira um nome">
+                                <?php echo(ErrMgr::bind('nome')) ?>
+                            </div>
+                            <div class="top-margin">
+                                <label>Email<span class="text-danger">*</span></label>
+                                <input required type="text" value="<?= $passageiro->email ?>" class="form-control" name="email" placeholder="Insira um email">
+                                <?php echo(ErrMgr::bind('email')) ?>
+                            </div>
+                            <div class="top-margin">
+                                <label>NIF<span class="text-danger">*</span></label>
+                                <input required type="number" value="<?= $passageiro->nif ?>" class="form-control" name="nif" placeholder="Insira o nif">
+                                <?php echo(ErrMgr::bind('nif')) ?>
+                            </div>
+                            <div class="top-margin">
+                                <label>Telefone<span class="text-danger">*</span></label>
+                                <input required type="number" value="<?= $passageiro->telefone ?>" class="form-control" name="telefone" placeholder="Insira um telefone">
+                                <?php echo(ErrMgr::bind('telefone')) ?>
+                            </div>
+                            <div class="top-margin">
+                                <label>Password<span class="text-danger">*</span></label>
+                                <input required type="password" value="<?= $passageiro->password ?>" class="form-control" name="password" placeholder="Insira um password">
+                                <?php echo(ErrMgr::bind('password')) ?>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-lg-8 text-right">
+                                    <button class=" btn btn-action" type="submit">Guadar</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </div>
+</div>

@@ -1,0 +1,56 @@
+<?php
+
+use ArmoredCore\WebObjects\Asset;
+use ArmoredCore\WebObjects\Data;
+use ArmoredCore\WebObjects\Layout;
+use ArmoredCore\WebObjects\URL;
+
+Layout::includeLayout('header_gestor');?>
+<?php $avioes = Data::get('aviao')?>
+
+
+<div class="container">
+
+    <ol class="breadcrumb">
+        <li><a href="index.html">Home</a></li>
+        <li class="active">Avião</li>
+    </ol>
+
+    <h1>Avião Management</h1>
+    <div class="row">
+        <table class="table table-striped">
+            <thead>
+            <th>Id</th>
+            <th>Referencia</th>
+            <th>Localização</th>
+            <th>Lotação</th>
+            <th>Tipo de Aviao</th>
+            </thead>
+            <tbody>
+            <?php foreach ($avioes as $aviao) { ?>
+                <tr>
+                    <td><?= $aviao->id ?></td>
+                    <td><?= $aviao->referencia ?></td>
+                    <td><?= $aviao->lotacao ?></td>
+                    <td><?= $aviao->tipo_aviao ?></td>
+                    <td>
+                        <a href="<?= URL::toRoute('avioes/edit' , $aviao->id)?>" class="btn btn-action" role="button">Editar</a>
+                        <a href="<?= URL::toRoute('avioes/destroy' , $aviao->id)?>" class="btn btn-action" role="button">Eliminar</a>
+                    </td>
+                </tr>
+            <?php } ?>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-sm-6">
+        <h2>Criar um novo aviao</h2>
+        <p>
+            <a href="<?= URL::toRoute('avioes/create') ?>" class="btn btn-info" role="button">Novo User</a>
+        </p>
+    </div>
+</div>
+
+
+
+

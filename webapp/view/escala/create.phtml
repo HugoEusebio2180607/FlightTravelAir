@@ -1,0 +1,97 @@
+<?php
+
+use ArmoredCore\WebObjects\Data;
+use ArmoredCore\WebObjects\ErrMgr;
+use ArmoredCore\WebObjects\Layout;
+use ArmoredCore\WebObjects\URL;
+
+Layout::includeLayout('header_gestor');
+?>
+<?php $escalas = Data::get('escala') ?>
+<?php $voos = Data::get('voo')?>
+<?php $aeroportos = Data::get('aeroporto')?>
+<?php ErrMgr::attach($escalas)?>
+
+
+    <div class="container">
+
+        <div class="row">
+
+
+            <article class="col-xs-12 maincontent">
+                <br><br>
+                <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <h1 class="thin text-center">Novo Voo</h1>
+                            <hr>
+                            <form action="<?= URL::toRoute('escala/store') ?>" method="Post">
+                                <div class="top-margin">
+                                    <label>Voo<span class="text-danger">*</span></label>
+                                    <select name="id_voo" class="form-group">
+                                        <?php foreach ($voos as $voo) {
+                                            echo ' <option value='.$voo->id.'>'.$voo->id.'</option>';
+                                        }
+                                        ?>
+                                    </select>
+                                    <?= ErrMgr::bind('id_voo')?>
+                                </div>
+                                <div class="top-margin">
+                                    <label>Aeroporto Origem<span class="text-danger">*</span></label>
+                                    <select name="aeroporto_origem" class="form-group">
+                                        <?php foreach ($aeroportos as $aeroporto) {
+                                            echo ' <option value='.$aeroporto->id.'>'.$aeroporto->nome.'</option>';
+                                        }
+                                        ?>
+                                    </select>
+                                    <?= ErrMgr::bind('aeroporto_origem')?>
+                                </div>
+                                <div class="top-margin">
+                                    <label>Aeroporto Destino<span class="text-danger">*</span></label>
+                                    <select name="aeroporto_destino" class="form-group">
+                                        <?php foreach ($aeroportos as $aeroporto) {
+                                            echo ' <option value='.$aeroporto->id.'>'.$aeroporto->nome.'</option>';
+                                        }
+                                        ?>
+                                    </select>
+                                    <?= ErrMgr::bind('aeroporto_destino')?>
+                                </div>
+
+                                <div class="top-margin">
+                                    <label>Data Origem<span class="text-danger">*</span></label>
+                                    <input required type="date" value="<?= $escalas->data_origem ?>" class="form-control" name="data_origem" placeholder="Insira a data de origem">
+                                    <?php echo(ErrMgr::bind('data_origem')) ?>
+                                </div>
+                                <div class="top-margin">
+                                    <label>Hora de Origem<span class="text-danger">*</span></label>
+                                    <input required type="time" value="<?= $escalas->hora_origem ?>" class="form-control" name="hora_origem" placeholder="Insira a Hora de origem">
+                                    <?php echo(ErrMgr::bind('hora_origem')) ?>
+                                </div>
+                                <div class="top-margin">
+                                    <label>Data Destino<span class="text-danger">*</span></label>
+                                    <input required type="date" value="<?= $escalas->data_final?>" class="form-control" name="data_final" placeholder="Insira a data de destino">
+                                    <?php echo(ErrMgr::bind('data_final')) ?>
+                                </div>
+                                <div class="top-margin">
+                                    <label>Hora Destino<span class="text-danger">*</span></label>
+                                    <input required type="time" value="<?= $escalas->hora_destino ?>" class="form-control" name="hora_destino" placeholder="Insira a hora de destino">
+                                    <?php echo(ErrMgr::bind('hora_destino')) ?>
+                                </div>
+                                <div class="top-margin">
+                                    <label>Distancia<span class="text-danger">*</span></label>
+                                    <input required type="text" value="<?= $escalas->distancia?>" class="form-control" name="distancia" placeholder="Insira a distancia">
+                                    <?php echo(ErrMgr::bind('distancia')) ?>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-lg-8 text-right">
+                                        <button class=" btn btn-action" type="submit">Nova Escala</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </div>

@@ -1,0 +1,88 @@
+<?php
+
+use ArmoredCore\WebObjects\Data;
+use ArmoredCore\WebObjects\Layout;
+use ArmoredCore\WebObjects\URL;
+
+Layout::includeLayout('header_passageiro');?>
+
+<?php $bilheteida = Data::get('bilheteida')?>
+<?php $bilhetevolta = Data::get('bilhetevolta')?>
+<?php $bilhetes = Data::get('bilhetes')?>
+
+<div class="container">
+
+    <div class="row">
+
+        <h3>Bilhete</h3>
+        <div class="col-sm-12">
+
+            <?php
+                echo '<h3 class=" text-center"> Voo de ' .$bilheteida->airportorigem->nome.'-'.$bilhetevolta->airportodestino->nome.'</h3>';
+            ?>
+
+            <div class="col-sm-8">
+                <table class="table table-striped">
+                    <thead>
+                    <th>Origem</th>
+                    <th>Destino</th>
+                    <th>Data Partida</th>
+                    <th>Hora Partida</th>
+                    <th>Data Destino</th>
+                    <th>Hora Destino</th>
+                    <th>Distancia</th>
+                    </thead>
+                    <tbody>
+                    <?php foreach ($bilheteida->escala as $voo) { ?>
+                        <tr>
+                            <td><?=$voo->airportorigem->nome?></td>
+                            <td><?=$voo->airportodestino->nome?></td>
+                            <td><?=$voo->data_origem->format('Y-m-d')?></td>
+                            <td><?=$voo->hora_origem?></td>
+                            <td><?=$voo->data_final->format('Y-m-d')?></td>
+                            <td><?=$voo->hora_destino?></td>
+                            <td><?=$voo->distancia?></td>
+                        </tr>
+                    <?php } ?>
+                    </tbody>
+                </table>
+            </div>
+
+            <?php
+            echo '<h3 class=" text-center"> Voo de ' .$bilheteida->airportorigem->nome.'-'.$bilhetevolta->airportodestino->nome.'</h3>';
+            ?>
+
+            <div class="col-sm-8">
+                <table class="table table-striped">
+                    <thead>
+                    <th>Origem</th>
+                    <th>Destino</th>
+                    <th>Data Partida</th>
+                    <th>Hora Partida</th>
+                    <th>Data Destino</th>
+                    <th>Hora Destino</th>
+                    <th>Distancia</th>
+                    </thead>
+                    <tbody>
+                    <?php foreach ($bilhetevolta->escala as $voo) { ?>
+                        <tr>
+                            <td><?=$voo->airportorigem->nome?></td>
+                            <td><?=$voo->airportodestino->nome?></td>
+                            <td><?=$voo->data_origem->format('Y-m-d')?></td>
+                            <td><?=$voo->hora_origem?></td>
+                            <td><?=$voo->data_final->format('Y-m-d')?></td>
+                            <td><?=$voo->hora_destino?></td>
+                            <td><?=$voo->distancia?></td>
+                        </tr>
+                    <?php } ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <p>
+                <a href="<?=Url::toRoute('passageiro/voos') ?>" class="btn btn-info" role="button">Voltar</a>
+            </p>
+        </div>
+    </div>
+</div>

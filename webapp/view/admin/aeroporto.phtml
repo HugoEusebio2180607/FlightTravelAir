@@ -1,0 +1,34 @@
+<?php
+
+use ArmoredCore\WebObjects\Data;
+use ArmoredCore\WebObjects\ErrMgr;
+use ArmoredCore\WebObjects\Layout;
+use ArmoredCore\WebObjects\URL;
+
+Layout::includeLayout('backoffice')?>
+
+<?php $airport= Data::get("aeroportos");?>
+<?php ErrMgr::attach($airport)?>
+
+
+<div class="container">
+
+        <form action="<?= URL::toRoute('admin/aeroporto') ?>" method="POST">
+        <div class="top-margin">
+            <label>Nome<span class="text-danger">*</span></label>
+            <input required type="text" value="<?= $airport->nome ?>" class="form-control" name="nome" placeholder="Insira um nome">
+            <?php echo(ErrMgr::bind('nome')) ?>
+        </div>
+        <div class="top-margin">
+            <label>Cidade<span class="text-danger">*</span></label>
+            <input required type="text" value="<?= $airport->localizacao ?>" class="form-control" name="localizacao" placeholder="Insira um cidade">
+            <?php echo(ErrMgr::bind('localizacao')) ?>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-lg-8 text-right">
+                <button class=" btn btn-action" type="submit">Inserir</button>
+            </div>
+        </div>
+    </form>
+</div>
